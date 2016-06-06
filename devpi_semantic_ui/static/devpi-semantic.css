@@ -1,0 +1,27 @@
+.main.menu .item img.logo {
+    margin-right: 1.5em;
+}
+
+.main.menu form.search {
+    width: 100%;
+}
+
+.ui.category.search > .results .category > .name {
+    width: 180px;
+    padding: .8em 1em;
+}
+
+.ui.category.search > .results .category .result {
+    margin-left: 180px;
+}
+
+.submenu {
+    background-color: #FAFAFA;
+    margin-top: 4em;
+    padding: 1em 0em;
+    border-bottom: 1px solid #ebe7e7;
+}
+
+.footer.segment {
+    padding: 5em 0em;
+}

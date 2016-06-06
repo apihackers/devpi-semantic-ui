@@ -1,0 +1,25 @@
+[bumpr]
+file = devpi_semantic_ui/__about__.py
+vcs = git
+commit = true
+tag = true
+tests = tox
+publish =
+    python setup.py sdist bdist_wheel register upload
+files =
+    README.md
+
+[bump]
+unsuffix = true
+
+[prepare]
+part = patch
+suffix = dev
+
+[changelog]
+file = CHANGELOG.md
+bump = {version} ({date:%Y-%m-%d})
+prepare = Current
+
+[readthedoc]
+id = devpi-semantic-ui

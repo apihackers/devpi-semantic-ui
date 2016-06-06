@@ -1,0 +1,11 @@
+<metal:layout use-macro="load: layout.pt" tal:define="title 'Search query syntax'">
+    <metal:breadcrumb fill-slot="breadcrumb">
+        <a class="section" href="${request.route_url('root')}"><i class="icon home"></i></a>
+        <i class="right chevron icon divider"></i>
+        <a class="section active" href="${request.route_url('search_help')}">Search query syntax</a>
+    </metal:breadcrumb>
+    <metal:content metal:fill-slot="content">
+        <h1 class="ui header">Search query syntax</h1>
+        <metal:search use-macro="request.macros['query_doc']" />
+    </metal:content>
+</metal:layout>

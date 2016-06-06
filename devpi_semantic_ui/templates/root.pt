@@ -1,0 +1,35 @@
+<metal:layout use-macro="load: layout.pt">
+    <metal:content metal:fill-slot="content">
+        <div class="ui cards">
+            <div class="ui card" tal:repeat="user users">
+                <div class="content">
+                    <div class="header">${user.user_name}</div>
+                    <div class="meta" tal:condition="user.user_title">${user.user_title}<</div>
+                    <div class="description" tal:condition="user.user_description">${user.user_description}<</div>
+                </div>
+                <div class="content" tal:condition="user.indexes">
+                    <div class="description">
+                        <div class="ui relaxed divided list">
+                            <div class="item" tal:repeat="index user.indexes">
+                                <i class="fork icon"></i>
+                                <div class="content">
+                                    <a class="header" href="${index.url}"
+                                       tal:condition="not index.index_title"
+                                       tal:attributes="title index.index_description">
+                                       ${user.user_name}/${index.index_name}
+                                    </a>
+                                    <a class="header" href="${index.url}"
+                                       tal:condition="index.index_title"
+                                       tal:attributes="title index.index_description">
+                                       ${index.index_title}
+                                       <small>(${user.user_name}/${index.index_name})</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </metal:content>
+</metal:layout>

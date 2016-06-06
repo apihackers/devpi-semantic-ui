@@ -1,0 +1,27 @@
+<metal:layout use-macro="load: layout.pt">
+    <metal:content metal:fill-slot="content">
+
+        <h1 class="ui header">${title}</h1>
+
+        <p class="infonote" tal:condition="blocked_by_mirror_whitelist">
+            Because this project isn't in the <code>mirror_whitelist</code>,
+            no releases from <strong>${blocked_by_mirror_whitelist}</strong> are included.
+        </p>
+
+        <table class="ui large collapsing striped table" tal:condition="versions">
+            <thead>
+                <tr>
+                    <th>Index</th>
+                    <th>Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr tal:repeat="version versions">
+                    <td><a href="${version.index_url}">${version.index_title}</a></td>
+                    <td><a href="${version.url}">${version.title}</a></td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </metal:content>
+</metal:layout>

@@ -1,0 +1,101 @@
+<metal:layout use-macro="load: layout.pt">
+    <metal:content metal:fill-slot="content">
+        <h1 class="ui header">
+            <i class="fork icon"></i>
+            <div class="content" tal:condition="not index_title">${index_name}</div>
+            <div class="content" tal:condition="index_title">
+                ${index_title}
+                <div class="sub header">${index_name}</div>
+            </div>
+        </h1>
+
+        <div class="ui horizontal link list">
+            <a href="${simple_index_url}" class="item">
+                <i class="linkify icon"></i>
+                simple index
+            </a>
+        </div>
+
+        <tal:packages condition="packages">
+            <h2>in-stage latest packages, at least as recent as bases</h2>
+            <table class="ui table striped">
+                <thead>
+                    <tr>
+                        <th>Info page</th>
+                        <th>Releases</th>
+                        <th>Documentation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr tal:repeat="package packages">
+                    <td><a href="${package.info.url}">${package.info.title}</a></td>
+                    <td>
+                        <tal:files condition="package.files" repeat="file package.files">
+                            <tal:file define="toxresults file.get('toxresults', []);
+                                              failed None if not toxresults else any(x['failed'] for x in toxresults)">
+                                <a href="${file.url}">${file.title}</a>
+                                <tal:tests condition="failed is not None">
+                                    (<a href="${package.make_toxresults_url(basename=file.basename)}"
+                                        tal:attributes="class 'failed' if failed else 'passed'">tests</a>)
+                                </tal:tests>
+                                <br tal:condition="not repeat.file.end" />
+                            </tal:file>
+                        </tal:files>
+                    </td>
+                    <td><a tal:condition="package.docs" href="${package.docs.url}">${package.docs.title}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </tal:packages>
+
+        <p class="index_description" tal:condition="index_description">${index_description}</p>
+
+        <tal:permissions condition="permissions">
+            <h2>permissions</h2>
+            <table class="ui table definition celled striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Users</th>
+                        <th>Groups</th>
+                        <th>Special</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tal:repeat="permission permissions">
+                        <td>${permission.title}</td>
+                        <td>
+                            <span tal:repeat="user permission.users">${user.title}</span>
+                        </td>
+                        <td>
+                            <span tal:repeat="group permission.groups">${group.title}</span>
+                        </td>
+                        <td>
+                            <span tal:repeat="special permission.special">${special.title}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </tal:permissions>
+
+        <tal:bases condition="bases">
+            <h2>inherited bases</h2>
+            <div class="ui list">
+                <div class="item" tal:repeat="base bases">
+                    <i class="large fork middle aligned icon"></i>
+                    <div class="content">
+                        <a class="header" href="${base.url}">${base.title}</a>
+                        <a href="${base.simple_url}" class="description">simple</a>
+                    </div>
+                </div>
+            </div>
+        </tal:bases>
+
+        <h2>whitelisted packages</h2>
+        <ul class="whitelist" tal:condition="whitelist">
+            <li tal:repeat="name whitelist">${name}</li>
+        </ul>
+        <p tal:condition="not whitelist">No packages whitelisted.</p>
+
+    </metal:content>
+</metal:layout>

@@ -1,0 +1,123 @@
+<metal:layout use-macro="load: layout.pt">
+    <metal:content metal:fill-slot="content">
+        <h1 class="ui header">
+            <i class="cube icon"></i>
+            <div class="content">
+                ${context.verified_project} ${context.version}
+                <div class="sub header">${context.stage.name}</div>
+            </div>
+        </h1>
+
+        <div class="ui horizontal link list" tal:condition="nav_links">
+            <tal:link repeat="link nav_links">
+                <a class="item" href="${link.url}">
+                    <i class="linkify icon"></i>
+                    ${link.title}
+                </a>
+            </tal:link>
+        </div>
+
+        <p id="summary" tal:condition="summary" tal:content="summary" />
+
+        <table class="ui very compact striped definition collapsing table" tal:condition="infos">
+            <thead class="full-width">
+                <tr>
+                    <th colspan="2" class="center aligned">Metadata</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr tal:repeat="info infos" class="${info[0]}">
+                    <td class="key">${info[0]}</td>
+                    <td class="value" tal:content="structure info[1]"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="infonote" tal:condition="blocked_by_mirror_whitelist">
+            Because this project isn't in the <code>mirror_whitelist</code>,
+            no releases from <strong>${blocked_by_mirror_whitelist}</strong> are included.
+        </p>
+
+        <table class="ui stripped table" tal:condition="files">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th class="toxresults" tal:condition="show_toxresults">Tox results</th>
+                    <th>History</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr tal:repeat="file files">
+                    <td title="${file.hash_spec}" class="ui header">
+                        <div class="content">
+                            <a class="header" href="${file.url}">${file.title}</a>
+                            <div class="sub header">
+                                <div class="ui mini horizontal list">
+                                    <div class ="item" tal:condition="file.size">
+                                        <i class="file archive outline icon tooltip"
+                                            data-content="Size" data-variation="inverted mini"
+                                            data-position="bottom left"></i>
+                                        ${file.size}
+                                    </div>
+                                    <div class="item" tal:condition="file.dist_type">
+                                        <i class="help icon tooltip"
+                                            data-content="Type" data-variation="inverted mini"
+                                            data-position="bottom left"></i>
+                                        ${file.dist_type}
+                                    </div>
+                                    <div class="item" tal:condition="file.py_version">
+                                        <i class="file archive outline icon tooltip"
+                                            data-content="Python" data-variation="inverted mini"
+                                            data-position="bottom left"></i>
+                                        ${file.py_version}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="toxresults" tal:condition="show_toxresults">
+                        <tal:toxresults condition="file.get('toxresults')">
+                            <div tal:repeat="toxresult file.get('toxresults')">
+                                <a href="${make_toxresult_url(basename=file.basename, toxresult=toxresult.basename)}#${toxresult._key}"
+                                    tal:attributes="class 'failed' if toxresult.failed else 'passed'">
+                                    ${toxresult.host} ${toxresult.platform} ${toxresult.envname} ${toxresult.get('pyversion')}
+                                </a>
+                            </div>
+                            <a href="${make_toxresults_url(basename=file.basename)}">
+                                All toxresults …
+                            </a>
+                        </tal:toxresults>
+                    </td>
+                    <td>
+                        <ul class="file_history">
+                            <li tal:repeat="log file.history">
+                                ${log.what}
+                                <tal:src condition="log.get('src')">
+                                    from
+                                    <a tal:omit-tag="not log.src.href" href="${log.src.href}">
+                                        ${log.src.title}
+                                    </a>
+                                </tal:src>
+                                <tal:dst condition="log.get('dst')">
+                                    to
+                                    <a tal:omit-tag="not log.dst.href" href="${log.dst.href}">
+                                        ${log.dst.title}
+                                    </a>
+                                </tal:dst>
+                                <tal:by condition="log.get('who')">
+                                    by ${log.who}
+                                </tal:by>
+                                <tal:count condition="log.get('count')">
+                                    ${log.count} time(s)
+                                </tal:count>
+                                <span tal:condition="log.get('when')" class="timestamp">${log.when}</span>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="description" tal:content="structure content" />
+    </metal:content>
+</metal:layout>

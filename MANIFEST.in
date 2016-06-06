@@ -1,0 +1,4 @@
+include README.md CHANGELOG.md MANIFEST.in LICENSE
+recursive-include devpi_semantic_ui *
+
+global-exclude *.pyc

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <title>${title|'devpi'}</title>
+        <metal:head use-macro="request.macros['head']" />
+    </head>
+    <body>
+        <header class="ui borderless main menu fixed">
+            <div class="ui container">
+                <a href="${request.route_url('root')}" class="header item">
+                    <img class="logo" src="${request.theme_static_url('images/python.svg')}" />
+                    Devpi
+                </a>
+                <form method="get" id="search" action="${request.route_url('search')}" class="ui fluid category search item">
+                    <div class="ui transparent icon input">
+                        <input name="query" class="prompt" type="text" autofocus
+                            placeholder="Search packages..."
+                            tal:attributes="value query|None">
+                        <i class="search link icon"></i>
+                    </div>
+                    <div class="results"></div>
+                </form>
+            </div>
+        </header>
+        <div class="submenu">
+            <div class="ui container">
+                <div class="ui huge breadcrumb">
+                    <metal:breadcrumb define-slot="breadcrumb">
+                        <tal:item tal:repeat="part request.navigation_info.path">
+                            <i class="right chevron icon divider" tal:condition="not repeat.part.start"></i>
+                            <a class="section ${python:'active' if repeat.part.end else ''}" href="${part.url}" tal:condition="not repeat.part.start">${part.title}</a>
+                            <a class="section" href="${part.url}" tal:condition="repeat.part.start"><i class="icon home"></i></a>
+                        </tal:item>
+                    </metal:breadcrumb>
+                </div>
+            </div>
+        </div>
+        <section class="ui main container segment ${content_class|'basic'}">
+            <metal:content define-slot="content" />
+        </section>
+
+        <footer class="ui inverted vertical footer segment">
+            <div class="ui container">
+                <div class="ui stackable inverted divided equal height stackable grid">
+                    <div class="five wide column">
+                        <h4 class="ui inverted header">About</h4>
+                        <div class="ui inverted link list">
+                            <a class="item" href="${request.route_url('search_help')}">Search syntax</a>
+                            <a class="item" href="http://doc.devpi.net/">Documentation</a>
+                        </div>
+                    </div>
+                    <div class="five wide column">
+                        <h4 class="ui inverted header">Versions</h4>
+                        <div class="ui inverted link list"
+                            tal:define="version_infos request.registry.get('devpi_version_info')"
+                            tal:condition="version_infos">
+                            <a tal:repeat="vi version_infos" class="item">${vi[0]}-${vi[1]}</a>
+                        </div>
+                    </div>
+                    <div class="six wide column">
+                        <h4 class="ui inverted header">Devpi</h4>
+                        <metal:statusbadge use-macro="request.macros['statusbadge']" />
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

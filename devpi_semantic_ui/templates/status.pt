@@ -1,0 +1,114 @@
+<metal:layout use-macro="load: layout.pt" tal:define="title 'Status'">
+    <metal:breadcrumb fill-slot="breadcrumb">
+        <a class="section" href="${request.route_url('root')}"><i class="icon home"></i></a>
+        <i class="right chevron icon divider"></i>
+        <a class="section active" href="${request.status_info.url}">Status</a>
+    </metal:breadcrumb>
+    <metal:content metal:fill-slot="content">
+        <h1 class="ui header">Status</h1>
+
+        <tal:msgs condition="msgs">
+            <h2>Status messages</h2>
+            <metal:msg tal:repeat="msg msgs" tal:define="colors {'fatal': 'negative', 'warn': 'warning'}">
+                <div class="ui message ${colors.get(msg.status)}">
+                    <div class="header" tal:condition="msg.status == 'fatal'">Error</div>
+                    <div class="header" tal:condition="msg.status == 'warn'">Warning</div>
+                    <p>${msg.msg}</p>
+                </div>
+            </metal:msg>
+        </tal:msgs>
+
+        <h2>Info</h2>
+        <table class="ui compact striped definition table">
+            <tbody>
+                <tr>
+                    <td>UUID</td>
+                    <td>${info.uuid}</td>
+                </tr>
+                <tr>
+                    <td>Outside URL</td>
+                    <td>${info.outside_url}</td>
+                </tr>
+                <tr>
+                    <td>Role</td>
+                    <td>${info.role}</td>
+                </tr>
+                <tal:masterurl condition="info.master_url">
+                    <tr>
+                        <td>Master URL</td>
+                        <td>${info.master_url}</td>
+                    </tr>
+                    <tr>
+                        <td>Master UUID</td>
+                        <td>${info.master_uuid}</td>
+                    </tr>
+                    <tr>
+                        <td>Replica started</td>
+                        <td><span class="timestamp">${info.replica_started_at}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Master serial</td>
+                        <td>
+                            ${info.master_serial}<br />
+                            last time changed <span class="timestamp">${info.master_serial_timestamp}</span><br />
+                            last in sync <span class="timestamp">${info.replica_in_sync_at}</span><br />
+                            last update from master <span class="timestamp">${info.update_from_master_at}</span>
+                        </td>
+                    </tr>
+                </tal:masterurl>
+                <tr>
+                    <td>Current serial</td>
+                    <td>
+                        ${info.serial}<br />
+                        last time changed <span class="timestamp">${info.last_commit_timestamp}</span><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Processed events serial</td>
+                    <td>
+                        ${info.event_serial}<br />
+                        last time processed <span class="timestamp">${info.event_serial_timestamp}</span><br />
+                        last in sync <span class="timestamp">${info.event_serial_in_sync_at}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <tal:replicationerrors condition="replication_errors">
+            <h2>Replication errors</h2>
+            <div class="ui message negative" tal:repeat="error replication_errors">
+                <div class="header">Error</div>
+                <!-- TODO: Copied from upstream template, need debug -->
+                <span tal:replace="error.get('relurl', '')" />
+                <p>${error.message}</p>
+            </div>
+        </tal:replicationerrors>
+
+        <tal:pollingreplicas condition="polling_replicas">
+            <h2>Polling replicas</h2>
+            <table class="ui compact striped definition table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Remote IP</th>
+                        <th>Outside URL</th>
+                        <th>Serial</th>
+                        <th>In request</th>
+                        <th>Last request</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr tal:repeat="replica polling_replicas">
+                        <td>${replica.uuid}</td>
+                        <td>${replica.remote_ip}</td>
+                        <td>${replica.outside_url}</td>
+                        <td>${replica.serial}</td>
+                        <td>${replica.in_request}</td>
+                        <td class="timestamp">${replica.last_request}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </tal:pollingreplicas>
+
+    </metal:content>
+</metal:layout>

@@ -1,0 +1,7 @@
+<metal:layout use-macro="load: layout.pt" tal:define="content_class 'red inverted'">
+    <metal:content metal:fill-slot="content">
+        <h1 class="ui dividing header">Error</h1>
+        <p>An error has occurred: <strong>${status}</strong></p>
+        <p>${msg}</p>
+    </metal:content>
+</metal:layout>
