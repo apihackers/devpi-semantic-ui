@@ -1,5 +1,3 @@
-import re
-
 from setuptools import setup
 
 
@@ -11,8 +9,6 @@ def _md(filename):
      - all badges
     '''
     content = open(filename).read()
-    for regex, replacement in MD_FILTERS:
-        content = re.sub(regex, replacement, content)
     return content
 
 
