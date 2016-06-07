@@ -10,13 +10,16 @@ def clean_item(item):
     for hit in item.get('sub_hits', []):
         clean_item(hit)
 
+def emptyresult():
+    return {'items': [], 'info': {'pagecount': 0, 'total': 0}}
+
 
 @view_config(route_name='searchapi',
              accept='application/json',
              content_type='application/json')
 def search(request):
     search_view = SearchView(request)
-    result = search_view.result
+    result = search_view.result or emptyresult()
     result['query'] = search_view.params['query'],
     # transform frozenset into list
     for item in result['items']:
