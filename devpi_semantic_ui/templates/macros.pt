@@ -1,6 +1,7 @@
 <metal:headcss define-macro="headcss">
     <link rel="stylesheet" type="text/css" href="${request.theme_static_url('semantic.min.css')}" />
     <link rel="stylesheet" type="text/css" href="${request.theme_static_url('devpi-semantic.css')}" />
+    <link rel="stylesheet" type="text/css" href="${request.theme_static_url('pygments.css')}" />
 </metal:headcss>
 
 <metal:headscript define-macro="headscript" use-macro="request.macros['original-headscript']">
