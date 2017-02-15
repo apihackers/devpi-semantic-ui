@@ -3,6 +3,7 @@ $(function() {
     // Tooltips
     $('.icon.tooltip').popup();
 
+    // Search
     $('.ui.search').search({
         type: 'category',
         minCharacters : 3,
@@ -42,6 +43,11 @@ $(function() {
             },
             url: '/+search?query={query}'
         },
-  });
+    });
+
+    // Tox results accordions
+    $('.toxresult .ui.accordion').accordion({
+        exclusive: false
+    });
 
 })

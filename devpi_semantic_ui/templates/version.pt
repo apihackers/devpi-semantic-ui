@@ -77,14 +77,19 @@
                     </td>
                     <td class="toxresults" tal:condition="show_toxresults">
                         <tal:toxresults condition="file.get('toxresults')">
-                            <div tal:repeat="toxresult file.get('toxresults')">
-                                <a href="${make_toxresult_url(basename=file.basename, toxresult=toxresult.basename)}#${toxresult._key}"
-                                    tal:attributes="class 'failed' if toxresult.failed else 'passed'">
-                                    ${toxresult.host} ${toxresult.platform} ${toxresult.envname} ${toxresult.get('pyversion')}
-                                </a>
-                            </div>
-                            <a href="${make_toxresults_url(basename=file.basename)}">
-                                All toxresults …
+                            <a tal:repeat="toxresult file.get('toxresults')"
+                                    class="mini ui labeled button" tabindex="0"
+                                    href="${make_toxresult_url(basename=file.basename, toxresult=toxresult.basename)}#${toxresult._key}">
+                                <div tal:attributes="class 'mini ui button ' + ('red' if toxresult.failed else 'green')">
+                                    ${toxresult.envname}
+                                </div>
+                                <span tal:attributes="class 'ui left pointing label ' + ('orange' if toxresult.failed else 'olive')">
+                                    ${toxresult.get('pyversion')}
+                                </span>
+                            </a>
+                            <a href="${make_toxresults_url(basename=file.basename)}" class="mini ui labeled icon button">
+                                <i class="list layout icon"></i>
+                                All results
                             </a>
                         </tal:toxresults>
                     </td>

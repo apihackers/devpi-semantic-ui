@@ -1,0 +1,54 @@
+<metal:layout use-macro="load: layout.pt">
+    <metal:content metal:fill-slot="content">
+        <h1 class="ui header">${title}</h1>
+
+        <div tal:repeat="toxresult toxresults"
+             tal:attributes="class 'toxresult ' + ('failed' if toxresult.failed else 'passed')">
+            <h2 id="${toxresult._key}"
+                tal:attributes="class 'ui dividing header toxresult_title ' + ('red' if toxresult.failed else 'green')">
+                ${toxresult.envname}
+                &nbsp;
+                <a class="ui small blue tag label" title="Python version">🐍 ${toxresult.get('pyversion')}</a>
+                <a class="ui small teal tag label" title="Host">⛁ ${toxresult.host}</a>
+                <a class="ui small tag label" title="Platform">⚙ ${toxresult.platform}</a>
+            </h2>
+            <h3 id="${toxresult._key}-setup" class="ui top attached inverted header">Setup output</h3>
+            <div class="ui attached inverted segment" tal:condition="toxresult.setup.commands">
+                <p tal:condition="not toxresult.setup.commands">No setup performed</p>
+                <div
+                    tal:condition="toxresult.setup.commands"
+                    tal:repeat="command toxresult.setup.commands"
+                    tal:attributes="class 'command ' + ('failed' if command.failed else 'passed')"
+                    id="${toxresult._key}-setup">
+                    <div class="ui inverted accordion">
+                        <div tal:attributes="class 'title' + (' active' if command.failed else '')">
+                            <i tal:attributes="class 'dropdown icon ' + ('red' if command.failed else 'green')"></i>
+                            <code>${command.command}</code>
+                        </div>
+                        <div tal:attributes="class 'content' + (' active' if command.failed else '')">
+                            <pre><code>${command.output}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 id="${toxresult._key}-test" class="ui top attached inverted header">Test output</h3>
+            <div class="ui attached inverted segment" tal:condition="toxresult.test.commands">
+                <p tal:condition="not toxresult.test.commands">No test run</p>
+                <div
+                    tal:condition="toxresult.test.commands"
+                    tal:repeat="command toxresult.test.commands"
+                    tal:attributes="class 'command ' + ('failed' if command.failed else 'passed')">
+                    <div class="ui inverted accordion">
+                        <div tal:attributes="class 'title' + (' active' if command.failed else '')">
+                            <i tal:attributes="class 'dropdown icon ' + ('red' if command.failed else 'green')"></i>
+                            <code>${command.command}</code>
+                        </div>
+                        <div tal:attributes="class 'content' + (' active' if command.failed else '')">
+                            <pre><code>${command.output}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </metal:content>
+</metal:layout>

@@ -25,3 +25,26 @@
 .footer.segment {
     padding: 5em 0em;
 }
+
+td.toxresults .mini.ui.button {
+    padding: 0.5em 1.1em 0.5em;
+}
+
+td.toxresults > .mini.ui.button {
+    margin-bottom: 0.5em;
+}
+
+.toxresult .command .title {
+    font-size: 0.85em;
+}
+
+.toxresult .command pre {
+    background-color: #1b1c1d;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+.toxresult {
+    margin-top: 3em;
+}
