@@ -1,5 +1,5 @@
 function onIFrameLoaded(iframe) {
-    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+    iframe.style.minHeight = iframe.contentWindow.document.body.scrollHeight + 'px';
     iframe.contentWindow.focus();
 }
 

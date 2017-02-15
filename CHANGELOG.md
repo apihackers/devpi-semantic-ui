@@ -8,6 +8,7 @@ Current
 - Upgraded to latest Semantic-UI (2.2.7)
 - Handle tox results
 - Handle documentation
+- Fix sticky footer
 
 0.1.0 (2016-06-07)
 ------------------
