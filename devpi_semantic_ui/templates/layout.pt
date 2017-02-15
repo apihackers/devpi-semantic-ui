@@ -5,7 +5,7 @@
         <metal:head use-macro="request.macros['head']" />
     </head>
     <body>
-        <header class="ui borderless main menu fixed">
+        <header class="ui fixed borderless menu">
             <div class="ui container">
                 <a href="${request.route_url('root')}" class="header item">
                     <img class="logo" src="${request.theme_static_url('images/python.svg')}" />
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <section class="ui main container segment ${content_class|'basic'}">
+        <section class="ui main container ${content_class|'segment basic'}">
             <metal:content define-slot="content" />
         </section>
 

@@ -1,4 +1,4 @@
-<metal:layout use-macro="load: layout.pt" tal:define="content_class 'red inverted'">
+<metal:layout use-macro="load: layout.pt" tal:define="content_class 'segment red inverted'">
     <metal:content metal:fill-slot="content">
         <h1 class="ui dividing header">Not Found</h1>
         <p>${msg}</p>

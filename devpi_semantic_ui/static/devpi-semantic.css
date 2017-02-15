@@ -48,3 +48,7 @@ td.toxresults > .mini.ui.button {
 .toxresult {
     margin-top: 3em;
 }
+
+iframe {
+    border: none;
+}

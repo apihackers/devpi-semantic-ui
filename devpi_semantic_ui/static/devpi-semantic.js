@@ -1,3 +1,8 @@
+function onIFrameLoaded(iframe) {
+    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+    iframe.contentWindow.focus();
+}
+
 $(function() {
 
     // Tooltips

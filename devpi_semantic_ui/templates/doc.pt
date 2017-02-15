@@ -1,0 +1,15 @@
+<metal:layout use-macro="load: layout.pt" tal:define="content_class 'fluid'">
+    <metal:content metal:fill-slot="content">
+        <div class="ui inline nag" tal:condition="version_mismatch">
+            <span class="title">
+            The latest available documentation (version ${doc_version}) isn't for the latest available package version.
+            </span>
+            <i class="close icon"></i>
+        </div>
+        <iframe
+            src="${url}" data-base_url="${base_url}" data-baseview_url="${baseview_url}"
+            width="100%" height="100%" scrolling="no" frameborder="0"
+            onload="onIFrameLoaded(this)">
+        </iframe>
+    </metal:content>
+</metal:layout>
