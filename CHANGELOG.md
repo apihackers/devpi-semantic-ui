@@ -4,7 +4,7 @@ Changelog
 Current
 -------
 
-- Nothing yet
+- Fix navbar width
 
 0.2.1 (2017-02-15)
 ------------------

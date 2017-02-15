@@ -4,11 +4,11 @@ body {
     flex-direction: column;
 }
 
-.main.menu .item img.logo {
+.fixed.menu .item img.logo {
     margin-right: 1.5em;
 }
 
-.main.menu form.search {
+.fixed.menu form.search {
     width: 100%;
 }
 
