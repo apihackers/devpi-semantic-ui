@@ -3,6 +3,7 @@ file = devpi_semantic_ui/__about__.py
 vcs = git
 commit = true
 tag = true
+push = true
 publish =
     python setup.py sdist bdist_wheel register upload
 files =
@@ -12,7 +13,7 @@ files =
 unsuffix = true
 
 [prepare]
-part = patch
+part = minor
 suffix = dev
 
 [changelog]
