@@ -7,6 +7,8 @@ $(function() {
 
     // Tooltips
     $('.icon.tooltip').popup();
+    
+    searchURL = $('#search').attr('action');
 
     // Search
     $('.ui.search').search({
@@ -39,14 +41,14 @@ $(function() {
 
                 if (devpiResponse.result.info.pagecount > 1) {
                     response.action = {
-                        url: '/+search?query=' + devpiResponse.result.query,
+                        url: searchURL + '?query=' + devpiResponse.result.query,
                         "text": 'View all '+ devpiResponse.result.info.total +' results'
                     };
                 }
 
                 return response;
             },
-            url: '/+search?query={query}'
+            url: searchURL + '?query={query}'
         },
     });
 
