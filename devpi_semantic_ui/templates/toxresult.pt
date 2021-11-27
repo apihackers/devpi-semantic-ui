@@ -3,9 +3,9 @@
         <h1 class="ui header">${title}</h1>
 
         <div tal:repeat="toxresult toxresults"
-             tal:attributes="class 'toxresult ' + ('failed' if toxresult.failed else 'passed')">
+             tal:attributes="class 'toxresult ' + ('failed' if getattr(toxresult, 'failed', False) else 'passed')">
             <h2 id="${toxresult._key}"
-                tal:attributes="class 'ui dividing header toxresult_title ' + ('red' if toxresult.failed else 'green')">
+                tal:attributes="class 'ui dividing header toxresult_title ' + ('red' if getattr(toxresult, 'failed', False) else 'green')">
                 ${toxresult.envname}
                 &nbsp;
                 <a class="ui small blue tag label" title="Python version">🐍 ${toxresult.get('pyversion')}</a>
