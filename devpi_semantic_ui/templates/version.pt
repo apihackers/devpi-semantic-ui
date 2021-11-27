@@ -80,10 +80,10 @@
                             <a tal:repeat="toxresult file.get('toxresults')"
                                     class="mini ui labeled button" tabindex="0"
                                     href="${make_toxresult_url(basename=file.basename, toxresult=toxresult.basename)}#${toxresult._key}">
-                                <div tal:attributes="class 'mini ui button ' + ('red' if toxresult.failed else 'green')">
+                                <div tal:attributes="class 'mini ui button ' + ('red' if getattr(toxresult, 'failed', False) else 'green')">
                                     ${toxresult.envname}
                                 </div>
-                                <span tal:attributes="class 'ui left pointing label ' + ('orange' if toxresult.failed else 'olive')">
+                                <span tal:attributes="class 'ui left pointing label ' + ('orange' if getattr(toxresult, 'failed', False) else 'olive')">
                                     ${toxresult.get('pyversion')}
                                 </span>
                             </a>
